@@ -8,6 +8,7 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+// with ancient_coder
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         if(lists.length == 0){
