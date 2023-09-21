@@ -1,0 +1,75 @@
+class Solution {
+    class pair
+    {
+        int row;
+        int col;
+        int time; 
+      public pair(int row , int col , int time)
+      {
+           this.row = row;
+           this.col = col;
+           this.time = time;
+      }
+    }
+       public int bfs( int[][] ans , int[] delr , int[] delc , Queue<pair> q)
+       {
+           int time = 0;
+          
+          int n = ans.length;
+          int m = ans[0].length;
+         
+
+           while(!q.isEmpty())
+           {
+               pair p = q.peek();
+                q.remove();
+                time = p.time;
+               for(int i=0; i<4; i++)
+               {
+                    int newr = p.row + delr[i];
+                    int newc = p.col + delc[i];
+                    if(newr < n && newr >= 0 && newc < m && newc >= 0 && ans[newr][newc] == 1)
+                    {
+                        q.add(new pair(newr , newc , time+1));
+                        ans[newr][newc] = 2;
+                    }
+               }
+           }
+           return time;
+       }
+    public int orangesRotting(int[][] grid) 
+    {
+      int n = grid.length;
+      int m = grid[0].length;
+      int[][] ans = grid;
+
+      int[] delr = {1 , 0 , -1 , 0};
+      int[] delc = {0 , 1 , 0 , -1};
+      int totalTime = 0;
+       Queue<pair> q = new LinkedList<pair>();
+        
+       for(int i=0; i<n; i++)
+       {
+            for(int j=0; j<m; j++)
+            {
+                if(grid[i][j] == 2)
+                {
+                      q.add(new pair(i ,j , 0));
+                   
+                }
+            }
+        }   
+         totalTime = bfs( ans , delr , delc ,q);
+          
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(ans[i][j] == 1){
+                    return -1;
+                }
+            }
+        }
+       
+       return totalTime;
+
+    }
+}
